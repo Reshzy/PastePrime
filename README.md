@@ -10,7 +10,7 @@
 
 ## Overview
 
-Paste Prime is a lightweight desktop application that automatically cleans copied messages (e.g., from warframe.market) so they paste reliably into Warframe's in-game chat. No more failed pastes due to invisible characters or formatting issues!
+Paste Prime is a lightweight desktop application that automatically cleans copied messages (e.g., from warframe.market) so they paste reliably into Warframe's in-game chat. It fixes the annoying bug where you can’t paste text inside the chat box — and since recent updates broke the old ‘display mode’ workaround, Paste Prime makes sure your trades and messages go through smoothly every time.
 
 ### ✨ Features
 
