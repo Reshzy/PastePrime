@@ -12,6 +12,8 @@
 """
 
 from typing import Optional
+import os
+import sys
 import threading
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -32,6 +34,18 @@ except ImportError:
     keyboard = None
 
 from cleaner import clean_text
+
+
+# this function just gets the right path for files whether running from PyInstaller or not, I don't know why it kept defaulting to tkinter icon without this
+# I'm not sure if this is the best way to do it but it works
+def resource_path(relative_path: str) -> str:
+    if hasattr(sys, "_MEIPASS"):
+        base_path = getattr(sys, "_MEIPASS")
+    elif getattr(sys, "frozen", False):
+        base_path = os.path.dirname(sys.executable)
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, relative_path)
 
 
 class _ToolTip:
@@ -119,9 +133,12 @@ class ClipboardCleanerApp(tk.Tk):
 
         # Set application icon
         try:
-            self.iconbitmap(default="assets/icon.ico")
+            icon_path = resource_path("assets/icon.ico")
+            self._icon_path = icon_path if os.path.exists(icon_path) else None
+            if self._icon_path:
+                self.iconbitmap(default=self._icon_path)
         except Exception:
-            pass
+            self._icon_path = None
 
         # State
         self.auto_clean_enabled = tk.BooleanVar(value=True)
@@ -329,6 +346,11 @@ class ClipboardCleanerApp(tk.Tk):
         countdown_window = tk.Toplevel(self)
         countdown_window.title("Get Ready")
         countdown_window.resizable(False, False)
+        try:
+            if getattr(self, "_icon_path", None):
+                countdown_window.iconbitmap(default=self._icon_path)  # type: ignore[arg-type]
+        except Exception:
+            pass
         ttk.Label(countdown_window, text="Switch to Warframe and focus chat. Typing begins in:").pack(padx=16, pady=(16, 4))
         counter_var = tk.StringVar(value="3")
         counter_label = ttk.Label(countdown_window, textvariable=counter_var, font=("Segoe UI", 18, "bold"))
@@ -406,6 +428,11 @@ class ClipboardCleanerApp(tk.Tk):
         capture_win = tk.Toplevel(self)
         capture_win.title("Set Hotkey")
         capture_win.resizable(False, False)
+        try:
+            if getattr(self, "_icon_path", None):
+                capture_win.iconbitmap(default=self._icon_path)  # type: ignore[arg-type]
+        except Exception:
+            pass
         ttk.Label(capture_win, text="Press the desired hotkey combination\n(Press Esc to cancel)").pack(padx=16, pady=16)
 
         self.update_idletasks()
