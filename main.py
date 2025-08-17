@@ -117,6 +117,12 @@ class ClipboardCleanerApp(tk.Tk):
         self.title("Paste Prime")
         self.minsize(520, 360)
 
+        # Set application icon
+        try:
+            self.iconbitmap(default="assets/icon.ico")
+        except Exception:
+            pass
+
         # State
         self.auto_clean_enabled = tk.BooleanVar(value=True)
         self.ascii_only_enabled = tk.BooleanVar(value=False)
