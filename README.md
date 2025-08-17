@@ -33,8 +33,8 @@ Paste Prime is a lightweight desktop application that automatically cleans copie
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/WarframeChatPaste.git
-cd WarframeChatPaste
+git clone https://github.com/Reshzy/PastePrime.git
+cd PastePrime
 
 # Create virtual environment
 python -m venv .venv
